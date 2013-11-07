@@ -1,0 +1,10 @@
+*** Keywords ***
+
+Skynet is available
+    No Operation
+
+SkyNet is activated
+    No Operation
+
+SkyNet is active
+    No Operation
