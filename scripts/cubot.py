@@ -1,4 +1,6 @@
+#! /usr/bin/env python
 from robot.api import TestSuite
+from robot.api import TestSuiteBuilder
 from robot.api import ResourceFile
 from robot.api import ResultWriter
 import os.path
@@ -113,15 +115,34 @@ if __name__ == '__main__':
     
 
     file_list = glob.glob('*.feature')
-    
-    if len(file_list) > 1:
+    init_suite = None
+    if os.path.exists( '__init__.txt' ):
+        print "__init__ found"
+        init_suite = TestSuiteBuilder().build('__init__.txt')
+
+    if len(file_list)==0:
+        import sys
+        print "No feature files found."
+        sys.exit()
+
+    elif len(file_list) > 1:
         suite = TestSuite('Main')
+        if init_suite:
+            suite.suites.append( init_suite )
+
         for f in file_list:
             feature_suite = read_feature( f )
             suite.suites.append( feature_suite )
     
     else:
-        suite = read_feature( file_list[0] )
+        if init_suite:
+            suite = TestSuite('Main')
+            suite.suites.append( init_suite )
+            feature_suite = read_feature( file_list[0] )
+            suite.suites.append( feature_suite )
+
+        else:
+            suite = read_feature( file_list[0] )
     
     
     result = execute( suite )
