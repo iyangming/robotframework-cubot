@@ -116,9 +116,9 @@ if __name__ == '__main__':
 
     file_list = glob.glob('*.feature')
     init_suite = None
-    if os.path.exists( '__init__.txt' ):
-        print "__init__ found"
-        init_suite = TestSuiteBuilder().build('__init__.txt')
+#    if os.path.exists( '__init__.txt' ):
+#        print "__init__ found"
+#        init_suite = TestSuiteBuilder().build('__init__.txt')
 
     if len(file_list)==0:
         import sys
