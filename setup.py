@@ -8,4 +8,7 @@ setup(name='robotframework-cubot',
       author='Maurice Koster',
       author_email='maurice@mauricekoster.com',
       scripts=['scripts/cubot.py'],
+      install_requires=[
+          'colorama',
+      ],
      )

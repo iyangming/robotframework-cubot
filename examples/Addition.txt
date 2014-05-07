@@ -1,0 +1,21 @@
+*** Settings ***
+Library           Collections
+
+*** Variables ***
+@{numbers}
+
+*** Keywords ***
+I have entered ${nr} into the calculator
+    Append To List    ${numbers}    ${nr}
+
+I press Add
+    ${nr1}=    Get From List    ${numbers}    -2
+    ${nr2}=    Get From List    ${numbers}    -1
+    Remove From List    ${numbers}    -1
+    Remove From List    ${numbers}    -1
+    ${result}=    Evaluate    ${nr1} + ${nr2}
+    Append To List    ${numbers}    ${result}
+
+the result should be ${expectedresult} on the screen
+    ${realresult}=    Get From List    ${numbers}    -1
+    Should Be Equal As Numbers    ${expectedresult}    ${realresult}

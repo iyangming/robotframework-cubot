@@ -5,7 +5,9 @@ from robot.api import ResourceFile
 from robot.api import ResultWriter
 import os.path
 import glob
+from colorama import init
 
+init()
 
 def read_feature(filename):
     print '=' * 78
@@ -112,9 +114,24 @@ def report(result):
     ResultWriter(result).write_results(report='report.html', xunit='xunit.xml', log=None)
 
 if __name__ == '__main__':
-    
+    import sys
+    import os
 
-    file_list = glob.glob('*.feature')
+    if len(sys.argv) > 1:
+        print sys.argv
+        file_list = []
+        fn = sys.argv[1]
+        if os.path.splitext(fn)[1] != 'feature':
+            if os.path.exists( fn + '.feature'):
+                file_list.append( fn + '.feature')
+        else: 
+            if os.path.exists( fn ):
+                file_list.append( fn )
+    else:
+        file_list = glob.glob('*.feature')
+
+    print file_list
+
     init_suite = None
 #    if os.path.exists( '__init__.txt' ):
 #        print "__init__ found"
